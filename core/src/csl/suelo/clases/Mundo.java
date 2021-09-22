@@ -3,7 +3,6 @@ package csl.suelo.clases;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.utils.Array;
-
 import csl.espacio.clases.Rendereable;
 
 public class Mundo{
@@ -14,9 +13,11 @@ public class Mundo{
 	private Array<Objeto> ob;
 	private Array<Wall> wall;
 	private Pj player;
+	private float gr;
 	
-	public Mundo(Camera cm){
-	cam = cm;
+	public Mundo(Camera cmr,float gravity){
+	cam = cmr;
+	gr = gravity;
 	bg = new Array<Rendereable>();
 	en = new Array<Enemigo>();
 	ob = new Array<Objeto>();
@@ -25,7 +26,8 @@ public class Mundo{
 	
 	@SuppressWarnings("unchecked")
 	public <T extends Pj>T add_player(float x,float y,float w,float h){
-		return (T)(new Pj(x,y,w,h));
+		player = new Pj(x,y,w,h);
+		return (T)player;
 	}
 	
 	public void add_fondo(Rendereable r){
@@ -50,7 +52,15 @@ public class Mundo{
 	}
 	
 	private void calculo(){
-		
+		player.pos().sub(0,gr);
+		for(Enemigo e:en){
+			if(e.could_execute()){
+				if(e.col().contains(player.col())){
+					player.hit(e);
+				}
+			
+			}
+		}
 	}
 	
 }

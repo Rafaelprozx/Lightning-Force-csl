@@ -13,5 +13,9 @@ public interface Colisionable {
 		 public static Rectangle camera_rec(Camera c) {
 				return new Rectangle(c.position.x-(c.viewportWidth/2),c.position.y-(c.viewportHeight/2),c.position.x+(c.viewportWidth/2),c.position.y+(c.viewportHeight/2));
 		}
+		 
+		 public static void camera_update(Camera c,Rectangle s){
+			 s.setPosition(c.position.x-(c.viewportWidth/2), c.position.y-(c.viewportHeight/2));
+		 }
 	 }
 }
