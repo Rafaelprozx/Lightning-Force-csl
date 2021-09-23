@@ -4,10 +4,16 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import csl.espacio.clases.Colisionable;
 import csl.espacio.clases.Rendereable;
 
-public class Enemigo implements Ejecutable, Ubicable {
+public class Enemigo implements Ejecutable, Ubicable, Hittable {
 
+	
+	public int damage() {
+		return 1;
+	}
+	
 	@Override
 	public Rectangle col() {
 		// TODO Auto-generated method stub
@@ -54,6 +60,24 @@ public class Enemigo implements Ejecutable, Ubicable {
 	public boolean could_execute() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int health() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean hit(Colisionable c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void kill() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

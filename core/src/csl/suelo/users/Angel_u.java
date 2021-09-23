@@ -5,7 +5,7 @@ import csl.suelo.clases.Pj;
 public class Angel_u extends Pj {
 
 	public Angel_u(float x, float y, float w, float h) {
-		super(x, y, w, h);
+		super(x, y, w, h,10);
 		// TODO Auto-generated constructor stub
 	}
 
