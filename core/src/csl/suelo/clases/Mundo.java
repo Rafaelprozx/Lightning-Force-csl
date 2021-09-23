@@ -2,6 +2,7 @@ package csl.suelo.clases;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import csl.espacio.clases.Colisionable;
@@ -11,7 +12,7 @@ import csl.espacio.clases.Rendereable;
 public class Mundo{
 	
 	private Camera cam;
-	private Array<Rendereable> bg;
+	private Array<Rendereable> bg,fg;
 	private Array<Enemigo> en;
 	private Array<Objeto> ob;
 	private Array<Wall> wall;
@@ -22,6 +23,7 @@ public class Mundo{
 	cam = cmr;
 	gr = gravity;
 	bg = new Array<Rendereable>();
+	fg = new Array<Rendereable>();
 	en = new Array<Enemigo>();
 	ob = new Array<Objeto>();
 	wall = new Array<Wall>();
@@ -29,12 +31,16 @@ public class Mundo{
 	
 	@SuppressWarnings("unchecked")
 	public <T extends Pj>T add_player(float x,float y,float w,float h,int heal){
-		player = new Pj(x,y,w,h,heal);
+		player = new Pj(x,y,w,h,heal,cam);
 		return (T)player;
 	}
 	
 	public void add_fondo(Rendereable r){
 		bg.add(r);
+	}
+	
+	public void add_frente(Rendereable r){
+		fg.add(r);
 	}
 	
 	public void add_enemigo(Enemigo e) {
@@ -49,8 +55,44 @@ public class Mundo{
 		wall.add(w);
 	}
 	
+	public void add_wall(Rectangle w){
+		wall.add(new Wall(w,cam));
+	}
+	
+	public void add_wall(float x,float y,float w,float h){
+		wall.add(new Wall(x,y,w,h,cam));
+	}
+	
 	public void Actuar(Batch batch,float delta){
 		calculo();
+		for(Rendereable r:bg){
+			if(r.could_render()) {
+			r.render(batch, delta);
+			}
+		}
+		if(player.could_render()){
+		player.Actuar(batch, delta);
+		}
+		for(Rendereable r:ob){
+			if(r.could_render()) {
+			r.render(batch, delta);
+			}
+		}
+		for(Rendereable r:en){
+			if(r.could_render()) {
+			r.render(batch, delta);
+			}
+		}
+		for(Rendereable r:wall){
+			if(r.could_render()) {
+			r.render(batch, delta);
+			}
+		}
+		for(Rendereable r:fg){
+			if(r.could_render()) {
+			r.render(batch, delta);
+			}
+		}
 	}
 	
 	private void calculo(){
@@ -102,9 +144,9 @@ public class Mundo{
 	}
 	
 	private boolean in_y_range(Colisionable a,Colisionable b){
-		return (a.col().y+a.col().height) > b.col().y && a.col().y < (b.col().y + b.col().height);
+		return (a.col().y+a.col().height)-1 > b.col().y && a.col().y < (b.col().y + b.col().height-1);
 	}
 	private boolean in_x_range(Colisionable a,Colisionable b){
-		return (a.col().x+a.col().width) > b.col().x && a.col().x < (b.col().x + b.col().width);
+		return (a.col().x+a.col().width-1) > b.col().x && a.col().x < (b.col().x + b.col().width-1);
 	}
 }

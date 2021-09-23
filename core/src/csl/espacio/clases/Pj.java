@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
+import csl.espacio.projectiles.misil_basico;
+
 public class Pj implements Colisionable,Rendereable,InputProcessor{
 
 	private Rectangle d;

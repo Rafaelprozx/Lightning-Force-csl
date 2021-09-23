@@ -17,5 +17,13 @@ public interface Colisionable {
 		 public static void camera_update(Camera c,Rectangle s){
 			 s.setPosition(c.position.x-(c.viewportWidth/2), c.position.y-(c.viewportHeight/2));
 		 }
+		 
+		 public static void move_cam(Camera c,Colisionable a,float distance){
+			 if(a.col().x+distance > c.position.x+(c.viewportWidth/2)){
+				 c.position.x = (a.col().x+distance)+(c.viewportWidth/2);
+			 }else if(a.col().x-distance < (c.position.x-(c.viewportWidth/2))){
+				 c.position.x = (a.col().x-distance)+(c.viewportWidth/2);
+			 }
+		 }
 	 }
 }
