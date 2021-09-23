@@ -1,4 +1,4 @@
-package csl.suelo.clases;
+package csl.suelo.fisica;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,6 +7,11 @@ import com.badlogic.gdx.utils.Array;
 
 import csl.espacio.clases.Colisionable;
 import csl.espacio.clases.Colisionable.statics;
+import csl.suelo.clases.Enemigo;
+import csl.suelo.clases.Objeto;
+import csl.suelo.clases.Pj;
+import csl.suelo.clases.Ubicable;
+import csl.suelo.clases.Wall;
 import csl.espacio.clases.Rendereable;
 
 public class Mundo{
@@ -127,26 +132,9 @@ public class Mundo{
 	}
 	
 	private void restat(Ubicable c, Colisionable w) {
-		if(in_y_range(c,w)){
-			if(c.col().x < w.col().x+w.col().width){
-				c.pos().x = w.col().x+w.col().width;
-			}else if((c.col().x +c.col().width) > w.col().x){
-				c.pos().x = w.col().x-0.1f;
-			}
-		}else if(in_x_range(c,w)){
-			if(c.col().y < w.col().y+w.col().height){
-				c.pos().y = w.col().y+w.col().height;
-			}else if((c.col().y +c.col().height) > w.col().y){
-				c.pos().y = w.col().y-0.1f;
-			}
-		}
+		
 			
 	}
 	
-	private boolean in_y_range(Colisionable a,Colisionable b){
-		return (a.col().y+a.col().height)-1 > b.col().y && a.col().y < (b.col().y + b.col().height-1);
-	}
-	private boolean in_x_range(Colisionable a,Colisionable b){
-		return (a.col().x+a.col().width-1) > b.col().x && a.col().x < (b.col().x + b.col().width-1);
-	}
+	
 }

@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import csl.espacio.Statics;
-import csl.suelo.clases.Mundo;
 import csl.suelo.clases.Pj;
+import csl.suelo.fisica.Mundo;
 
 public class test2 implements Screen {
 
