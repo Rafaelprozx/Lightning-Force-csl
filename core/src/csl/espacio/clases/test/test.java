@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
-import csl.espacio.clases.Colisionable;
+import csl.espacio.Colisionable;
 import csl.espacio.clases.Pj;
 import csl.espacio.naves.Impact;
 

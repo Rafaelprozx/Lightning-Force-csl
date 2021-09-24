@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import csl.espacio.clases.Colisionable;
+import csl.espacio.Colisionable;
 import csl.espacio.clases.Rendereable;
 
 public class Enemigo implements Ejecutable, Ubicable, Hittable {
@@ -79,16 +79,6 @@ public class Enemigo implements Ejecutable, Ubicable, Hittable {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	@Override
-	public float centerX() {
-		return pos().x+(col().height/2);
-	}
-
-	@Override
-	public float centerY() {
-		return pos().y+(col().width/2);
-	}
 
 	@Override
 	public float moving_force_lr() {
@@ -98,6 +88,30 @@ public class Enemigo implements Ejecutable, Ubicable, Hittable {
 
 	@Override
 	public float moving_force_up() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float highest_point() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float lowest_point() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float lefest_point() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float righest_point() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

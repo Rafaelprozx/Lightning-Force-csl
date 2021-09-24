@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import csl.espacio.Colisionable;
+
 public class Enemigo implements Colisionable, Rendereable {
 
 	private Rectangle data;
@@ -73,12 +75,23 @@ public class Enemigo implements Colisionable, Rendereable {
 	}
 
 	@Override
-	public float centerX() {
-		return pos.x+(data.height/2);
+	public float highest_point() {
+		return pos.y+data.height;
 	}
 
 	@Override
-	public float centerY() {
-		return pos.y+(data.width/2);
+	public float lowest_point() {
+		return pos.y;
 	}
+
+	@Override
+	public float lefest_point() {
+		return pos.x;
+	}
+
+	@Override
+	public float righest_point() {
+		return pos.x+data.width;
+	}
+
 }

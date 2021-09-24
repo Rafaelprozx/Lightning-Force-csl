@@ -1,12 +1,14 @@
-package csl.espacio.clases;
+package csl.espacio;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Rectangle;
 
 public interface Colisionable {
 	public Rectangle col();
-	public float centerX();
-	public float centerY();
+	public float highest_point();
+	public float lowest_point();
+	public float lefest_point();
+	public float righest_point();
 	 public static class statics{
 		 public static boolean In_cam_range(Colisionable c,Camera cam){
 			 return !(c.col().x < cam.position.x-(cam.viewportWidth/2) || c.col().y < cam.position.y-(cam.viewportHeight/2) || c.col().x > cam.position.x+(cam.viewportWidth/2) || c.col().y > cam.position.y+(cam.viewportHeight/2));

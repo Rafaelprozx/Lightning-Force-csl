@@ -12,7 +12,7 @@ public class Wall implements Rendereable, Ubicable {
 	private Rectangle hitbox;
 	private Vector2 pos;
 	private Camera cam;
-	private float cx,cy;
+	private float hx,hy;
 	
 	public Wall(float x,float y,float w,float h,Camera cm) {
 		this(new Rectangle(x,y,w,h),cm);
@@ -22,8 +22,8 @@ public class Wall implements Rendereable, Ubicable {
 		hitbox = r;
 		cam = cm;
 		pos = new Vector2(r.x,r.y);
-		cx = r.x+(r.width/2);
-		cy = r.y+(r.height/2);
+		hx = r.x+r.width;
+		hy = r.y+r.height;
 	}
 	
 	@Override
@@ -45,14 +45,6 @@ public class Wall implements Rendereable, Ubicable {
 	public void render(Batch batch, float delta) {
 
 	}
-	
-	public float centerY() {
-		return cy;
-	}
-	
-	public float centerX() {
-		return cx;
-	}
 
 	@Override
 	public Vector2 ubic() {
@@ -66,14 +58,32 @@ public class Wall implements Rendereable, Ubicable {
 
 	@Override
 	public float moving_force_lr() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public float moving_force_up() {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public float highest_point() {
+		return hy;
+	}
+
+	@Override
+	public float lowest_point() {
+		return hitbox.y;
+	}
+
+	@Override
+	public float lefest_point() {
+		return hitbox.x;
+	}
+
+	@Override
+	public float righest_point() {
+		return hx;
 	}
 
 }

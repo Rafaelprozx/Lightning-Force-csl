@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
-import csl.espacio.clases.Colisionable;
+import csl.espacio.Colisionable;
 import csl.espacio.clases.Rendereable;
 import csl.suelo.clases.Projectil;
 

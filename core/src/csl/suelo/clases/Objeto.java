@@ -43,16 +43,6 @@ public class Objeto implements Ejecutable, Ubicable {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	@Override
-	public float centerX() {
-		return pos().x+(col().height/2);
-	}
-
-	@Override
-	public float centerY() {
-		return pos().y+(col().width/2);
-	}
 
 	@Override
 	public float moving_force_lr() {
@@ -76,6 +66,30 @@ public class Objeto implements Ejecutable, Ubicable {
 	public boolean could_execute() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public float highest_point() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float lowest_point() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float lefest_point() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float righest_point() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

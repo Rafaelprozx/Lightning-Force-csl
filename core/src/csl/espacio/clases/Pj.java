@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
+import csl.espacio.Colisionable;
 import csl.espacio.projectiles.misil_basico;
 
 public class Pj implements Colisionable,Rendereable,InputProcessor{
@@ -310,13 +311,23 @@ public class Pj implements Colisionable,Rendereable,InputProcessor{
 	}
 
 	@Override
-	public float centerX() {
-		return pos.x+(d.height/2);
+	public float highest_point() {
+		return pos.y+d.height;
 	}
 
 	@Override
-	public float centerY() {
-		return pos.y+(d.width/2);
+	public float lowest_point() {
+		return pos.y;
+	}
+
+	@Override
+	public float lefest_point() {
+		return pos.x;
+	}
+
+	@Override
+	public float righest_point() {
+		return pos.x+d.width;
 	}
 	
 }

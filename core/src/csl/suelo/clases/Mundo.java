@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import csl.espacio.clases.Colisionable;
+
+import csl.espacio.Colisionable;
 import csl.espacio.clases.Rendereable;
 
 public class Mundo{
@@ -18,12 +19,13 @@ public class Mundo{
 	private Array<Colisionable> all;
 	private Array<Projectil> prj;
 	private Pj player;
-	private float gr,crr;
+	private float gr,crr,cr;
 	
 	public Mundo(Camera cmr,float gravity){
 	cam = cmr;
 	gr = gravity;
 	crr = .1f;
+	cr = crr*2;
 	bg = new Array<Rendereable>();
 	fg = new Array<Rendereable>();
 	en = new Array<Enemigo>();
@@ -211,18 +213,22 @@ public class Mundo{
 	
 	private void restat_ud(Ubicable c,Colisionable w){
 		if(c.pos().y < w.col().y+w.col().height && c.pos().y > (w.col().y+w.col().height)-(gr*2)){
-			c.pos().y = w.col().y+w.col().height+(gr/10);
+			c.pos().y = w.col().y+w.col().height+crr;
 		}else if(c.pos().y+c.col().height > w.col().y && c.pos().y+c.col().height < w.col().y+(c.moving_force_up()*2)){
 			c.pos().y = w.col().y-(c.col().height+(c.moving_force_up()/1.5f));
 		}
 	}
 	
 	private void restat_lr(Ubicable c,Colisionable w){
+		if(y_range(c,w)){
 		if(c.pos().x < w.col().x+w.col().width && c.pos().x > (w.col().x+w.col().width)-(c.moving_force_lr()*1.5f)){
 			c.pos().x = w.col().x+w.col().width+(c.moving_force_lr()/2f);
 		}else if(c.pos().x+c.col().width > w.col().x && c.pos().x+c.col().width < w.col().x+(c.moving_force_lr()*1.5f)){
 			c.pos().x = w.col().x-(c.col().width+(c.moving_force_lr()/2f));
-		}
+		}}
 	}
 	
+	private boolean y_range(Ubicable c,Colisionable w){
+		return (c.pos().y-.4 < w.col().y+w.col().height && c.pos().y+.4 > w.col().y) || (c.pos().y+c.col().height > w.col().y+.4 && c.pos().y+ c.col().height < (w.col().y+w.col().height)-.4);
+	}
 }

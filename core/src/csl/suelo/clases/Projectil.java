@@ -73,16 +73,6 @@ public class Projectil implements Rendereable, Ubicable ,Damageable{
 		pos.set(x, y);
 		
 	}
-	
-	@Override
-	public float centerX() {
-		return pos.x+(d.height/2);
-	}
-
-	@Override
-	public float centerY() {
-		return pos.y+(d.width/2);
-	}
 
 	@Override
 	public float moving_force_lr() {
@@ -107,6 +97,26 @@ public class Projectil implements Rendereable, Ubicable ,Damageable{
 	@Override
 	public int Damage() {
 		return 1;
+	}
+
+	@Override
+	public float highest_point() {
+		return pos.y+d.height;
+	}
+
+	@Override
+	public float lowest_point() {
+		return pos.y;
+	}
+
+	@Override
+	public float lefest_point() {
+		return pos.x;
+	}
+
+	@Override
+	public float righest_point() {
+		return pos.x+d.width;
 	}
 
 }

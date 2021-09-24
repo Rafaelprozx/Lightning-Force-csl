@@ -2,7 +2,7 @@ package csl.suelo.clases;
 
 import com.badlogic.gdx.math.Vector2;
 
-import csl.espacio.clases.Colisionable;
+import csl.espacio.Colisionable;
 
 public interface Ubicable extends Colisionable{
 public Vector2 pos();

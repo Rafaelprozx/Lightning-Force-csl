@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import csl.espacio.clases.Colisionable;
+
+import csl.espacio.Colisionable;
 import csl.espacio.clases.Rendereable;
 import csl.suelo.clases.Projectil.origen;
 import csl.suelo.projectiles.balas_9mm;
@@ -202,16 +203,6 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	}
 
 	@Override
-	public float centerX() {
-		return pos.x+(hitbox.width/2);
-	}
-
-	@Override
-	public float centerY() {
-		return pos.y+(hitbox.height/2);
-	}
-
-	@Override
 	public float moving_force_lr() {
 		return mflr;
 	}
@@ -219,6 +210,26 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	@Override
 	public float moving_force_up() {
 		return mfu;
+	}
+
+	@Override
+	public float highest_point() {
+		return pos.y+hitbox.height;
+	}
+
+	@Override
+	public float lowest_point() {
+		return pos.y;
+	}
+
+	@Override
+	public float lefest_point() {
+		return pos.x;
+	}
+
+	@Override
+	public float righest_point() {
+		return pos.x+hitbox.width;
 	}
 
 }
