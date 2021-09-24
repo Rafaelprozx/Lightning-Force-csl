@@ -20,7 +20,7 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	private boolean[] ss;
 	private boolean facing;
 	private Camera cam;
-	private float mflr=0,mfu=5;
+	private float mflr=0,mfu=6;
 	
 	public Pj(float x,float y,float w,float h,int heal,float mov,Camera cm){
 	health = heal;

@@ -119,7 +119,7 @@ public class Mundo{
 	
 	public void render_hitbox_player(ShapeRenderer r){
 		r.setColor(0, 1, 1, 1);
-		r.rect(player.pos().x, player.pos().y, player.col().width, player.col().width);
+		r.rect(player.pos().x, player.pos().y, player.col().width, player.col().height);
 	}
 	
 	public void render_hitbox_wall(ShapeRenderer r){
@@ -211,24 +211,68 @@ public class Mundo{
 	restat_ud(c,w);
 	}
 	
-	private void restat_ud(Ubicable c,Colisionable w){
-		if(c.pos().y < w.col().y+w.col().height && c.pos().y > (w.col().y+w.col().height)-(gr*2)){
-			c.pos().y = w.col().y+w.col().height+crr;
-		}else if(c.pos().y+c.col().height > w.col().y && c.pos().y+c.col().height < w.col().y+(c.moving_force_up()*2)){
-			c.pos().y = w.col().y-(c.col().height+(c.moving_force_up()/1.5f));
-		}
+	public void restat_lr(Ubicable c,Colisionable w){
+		if(c.col().width <= w.col().width){
+			restat_ud_eqma(c,w);
+			}else{
+			restat_ud_mn(c,w);
+			}
 	}
 	
-	private void restat_lr(Ubicable c,Colisionable w){
+	public void restat_ud(Ubicable c,Colisionable w) {
+		if(c.col().height <= w.col().height) {
+			restat_lr_eqma(c,w);
+			}else{
+			restat_lr_mn(c,w);
+			}
+	}
+	
+	private void restat_ud_eqma(Ubicable c,Colisionable w){
+		if(x_range(c,w)) {
+		if(c.lowest_point() < w.highest_point() && c.lowest_point() > w.highest_point()-(gr*2)){
+			c.pos().y = w.col().y+w.col().height+crr;
+		}else if(c.highest_point() > w.lowest_point() && c.highest_point() < w.lowest_point()+(c.moving_force_up()*2)){
+			c.pos().y = w.col().y-(c.col().height+(c.moving_force_up()/1.5f));
+		}}
+		
+	}
+	
+	private void restat_lr_eqma(Ubicable c,Colisionable w){
 		if(y_range(c,w)){
-		if(c.pos().x < w.col().x+w.col().width && c.pos().x > (w.col().x+w.col().width)-(c.moving_force_lr()*1.5f)){
+		if(c.lefest_point() < w.righest_point() && c.lefest_point() > w.righest_point()-(c.moving_force_lr()*1.5f)){
 			c.pos().x = w.col().x+w.col().width+(c.moving_force_lr()/2f);
-		}else if(c.pos().x+c.col().width > w.col().x && c.pos().x+c.col().width < w.col().x+(c.moving_force_lr()*1.5f)){
+		}else if(c.righest_point() > w.lefest_point() && c.righest_point() < w.lefest_point()+(c.moving_force_lr()*1.5f)){
 			c.pos().x = w.col().x-(c.col().width+(c.moving_force_lr()/2f));
 		}}
 	}
 	
-	private boolean y_range(Ubicable c,Colisionable w){
-		return (c.pos().y-.4 < w.col().y+w.col().height && c.pos().y+.4 > w.col().y) || (c.pos().y+c.col().height > w.col().y+.4 && c.pos().y+ c.col().height < (w.col().y+w.col().height)-.4);
+	private void restat_ud_mn(Ubicable c,Colisionable w){
+		if(x_range(w,c)) {
+		if(c.lowest_point() < w.highest_point() && c.lowest_point() > w.highest_point()-(gr*2)){
+			c.pos().y = w.col().y+w.col().height+crr;
+		}else if(c.highest_point() > w.lowest_point() && c.highest_point() < w.lowest_point()+(c.moving_force_up()*2)){
+			c.pos().y = w.col().y-(c.col().height+(c.moving_force_up()/1.5f));
+		}}
+		
 	}
+	
+	private void restat_lr_mn(Ubicable c,Colisionable w){
+		if(y_range(w,c)){
+		if(c.lefest_point() < w.righest_point() && c.lefest_point() > w.righest_point()-(c.moving_force_lr()*1.5f)){
+			c.pos().x = w.col().x+w.col().width+(c.moving_force_lr()/2f);
+		}else if(c.righest_point() > w.lefest_point() && c.righest_point() < w.lefest_point()+(c.moving_force_lr()*1.5f)){
+			c.pos().x = w.col().x-(c.col().width+(c.moving_force_lr()/2f));
+		}}
+	}
+	
+	private boolean y_range(Colisionable c,Colisionable w){
+		return (c.lowest_point()+cr < w.highest_point() && c.lowest_point() > w.lowest_point()+cr) || (c.highest_point() > w.lowest_point()+cr && c.highest_point()+cr < w.highest_point());
+	}
+	
+	
+	private boolean x_range(Colisionable c,Colisionable w) {
+		return (c.lefest_point()+cr < w.righest_point() && c.lefest_point() > w.lefest_point()+cr) || (c.righest_point() > w.lefest_point()+cr && c.righest_point()+cr < w.righest_point());
+	}
+	
+	
 }
