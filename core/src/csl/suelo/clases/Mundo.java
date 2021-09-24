@@ -1,17 +1,13 @@
-package csl.suelo.fisica;
+package csl.suelo.clases;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 import csl.espacio.clases.Colisionable;
 import csl.espacio.clases.Colisionable.statics;
-import csl.suelo.clases.Enemigo;
-import csl.suelo.clases.Objeto;
-import csl.suelo.clases.Pj;
-import csl.suelo.clases.Ubicable;
-import csl.suelo.clases.Wall;
 import csl.espacio.clases.Rendereable;
 
 public class Mundo{
@@ -22,11 +18,12 @@ public class Mundo{
 	private Array<Objeto> ob;
 	private Array<Wall> wall;
 	private Pj player;
-	private float gr;
+	private float gr,ebb;
 	
 	public Mundo(Camera cmr,float gravity){
 	cam = cmr;
 	gr = gravity;
+	ebb = gravity/10;
 	bg = new Array<Rendereable>();
 	fg = new Array<Rendereable>();
 	en = new Array<Enemigo>();
@@ -100,6 +97,32 @@ public class Mundo{
 		}
 	}
 	
+	public void render_hitbox_player(ShapeRenderer r){
+		r.setColor(0, 1, 1, 1);
+		r.rect(player.pos().x, player.pos().y, player.col().width, player.col().width);
+	}
+	
+	public void render_hitbox_wall(ShapeRenderer r){
+		r.setColor(1, 0, 0, 1);
+		for(Wall l:wall){
+			r.rect(l.col().x, l.col().y, l.col().width, l.col().height);
+		}
+	}
+	
+	public void render_hitbox_objetos(ShapeRenderer r){
+		r.setColor(0, 0, 1, 1);
+		for(Colisionable l:ob){
+			r.rect(l.col().x, l.col().y, l.col().width, l.col().height);
+		}
+	}
+	
+	public void render_hitbox_enemigos(ShapeRenderer r){
+		r.setColor(1, 1, 0, 1);
+		for(Colisionable l:en){
+			r.rect(l.col().x, l.col().y, l.col().width, l.col().height);
+		}
+	}
+	
 	private void calculo(){
 		player.pos().sub(0,gr);
 		for(Enemigo e:en){
@@ -114,9 +137,9 @@ public class Mundo{
 		}
 		for(Wall e:wall){
 			if(e.could_render()){
-				if(e.col().contains(player.col())){
+				if(e.col().overlaps(player.col())){
 					restat(player,e);
-				}
+					}
 				for(Objeto o:ob){
 					if(o.could_render() && o.col().contains(e.col())){
 					restat(o,e);
@@ -129,12 +152,26 @@ public class Mundo{
 				o.pos().sub(0, gr);
 			}
 		}
+		if(player.pos().y < 0){
+			player.pos().y = 20;
+		}
 	}
 	
 	private void restat(Ubicable c, Colisionable w) {
-		
+		if(c.pos().y < w.col().y+w.col().height){
+			c.pos().y = w.col().y+w.col().height+.1f;
+		}else if(c.pos().y+c.col().height > w.col().y){
+			c.pos().y = c.col().height+w.col().y-.1f;
+		}
 			
 	}
 	
+	private boolean y_range(Colisionable a,Colisionable b){
+		return b.col().y+ebb < a.col().y+a.col().height | (b.col().y+b.col().height)-ebb > a.col().y;
+	}
+	
+	private boolean x_range(Colisionable a,Colisionable b){
+		return b.col().x+ebb < a.col().x+a.col().width | (b.col().x+b.col().width)-ebb > a.col().x;
+	}
 	
 }

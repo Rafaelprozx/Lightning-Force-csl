@@ -49,6 +49,9 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 		}else if(ss[2]){
 			pos.sub(3, 0);
 		}
+		if(ss[4]){
+			pos.add(0,3);
+		}
 		render(draw,delta);
 	}
 	

@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 
 import csl.espacio.Statics;
+import csl.suelo.clases.Mundo;
 import csl.suelo.clases.Pj;
-import csl.suelo.fisica.Mundo;
 
 public class test2 implements Screen {
 
@@ -48,7 +48,7 @@ public class test2 implements Screen {
 	sh.begin(ShapeType.Line);
 	sh.setColor(1, 0, 0, 1);
 	sh.rect(player.pos().x, player.pos().y,player.col().width,player.col().height);
-	sh.rect(0,0,50,5);
+	sh.rect(0,0,50,10);
 	sh.end();
 	}
 
