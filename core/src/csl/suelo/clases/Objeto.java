@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import csl.espacio.clases.Rendereable;
 
-public class Objeto implements Rendereable, Ubicable {
+public class Objeto implements Ejecutable, Ubicable {
 
 	@Override
 	public Rectangle col() {
@@ -64,6 +64,18 @@ public class Objeto implements Rendereable, Ubicable {
 	public float moving_force_up() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void ejecutar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean could_execute() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

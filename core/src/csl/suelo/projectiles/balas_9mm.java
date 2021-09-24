@@ -11,8 +11,8 @@ import csl.suelo.clases.Projectil;
 
 public class balas_9mm extends Projectil{
 
-	public balas_9mm(Vector2 pos, boolean dir, Camera cm) {
-		super(pos, dir?new Vector2(9,0):new Vector2(-9,0), new Rectangle(pos.x,pos.y,4,2), cm);
+	public balas_9mm(Vector2 pos, boolean dir,origen org, Camera cm) {
+		super(pos, dir?new Vector2(9,0):new Vector2(-9,0), new Rectangle(pos.x,pos.y,4,2), cm,org);
 	}
 	
 	@Override

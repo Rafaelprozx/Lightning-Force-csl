@@ -15,27 +15,43 @@ public class Mundo{
 	private Array<Enemigo> en;
 	private Array<Objeto> ob;
 	private Array<Wall> wall;
+	private Array<Colisionable> all;
+	private Array<Projectil> prj;
 	private Pj player;
-	private float gr;
+	private float gr,crr;
 	
 	public Mundo(Camera cmr,float gravity){
 	cam = cmr;
 	gr = gravity;
+	crr = .1f;
 	bg = new Array<Rendereable>();
 	fg = new Array<Rendereable>();
 	en = new Array<Enemigo>();
 	ob = new Array<Objeto>();
 	wall = new Array<Wall>();
+	all = new Array<Colisionable>();
+	prj = new Array<Projectil>();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T extends Pj>T add_player(float x,float y,float w,float h,int heal){
-		player = new Pj(x,y,w,h,heal,cam);
+	public <T extends Pj>T add_player(float x,float y,float w,float h,int heal,float mov){
+		player = new Pj(x,y,w,h,heal,mov,cam);
+		all.add(player);
 		return (T)player;
+	}
+	
+	public <T extends Pj> T add_player(T pl){
+		player = pl;
+		all.add(pl);
+		return pl;
 	}
 	
 	public void add_fondo(Rendereable r){
 		bg.add(r);
+	}
+	
+	public void add_projectil(Projectil c){
+		prj.add(c);
 	}
 	
 	public void add_frente(Rendereable r){
@@ -44,22 +60,27 @@ public class Mundo{
 	
 	public void add_enemigo(Enemigo e) {
 		en.add(e);
+		all.add(e);
 	}
 	
 	public void add_Objeto(Objeto o){
 		ob.add(o);
+		all.add(o);
 	}
 	
-	public void add(Wall w){
+	public void add_wall(Wall w){
 		wall.add(w);
+		all.add(w);
 	}
 	
 	public void add_wall(Rectangle w){
 		wall.add(new Wall(w,cam));
+		all.add(wall.get(wall.size-1));
 	}
 	
 	public void add_wall(float x,float y,float w,float h){
 		wall.add(new Wall(x,y,w,h,cam));
+		all.add(wall.get(wall.size-1));
 	}
 	
 	public void Actuar(Batch batch,float delta){
@@ -130,6 +151,7 @@ public class Mundo{
 				if(e.could_render()){
 					e.pos().sub(0,gr);
 				}
+				e.ejecutar();
 			}
 		}
 		for(Wall e:wall){
@@ -142,30 +164,65 @@ public class Mundo{
 					restat(o,e);
 					}
 				}
+				for(Enemigo o:en){
+					if(o.could_render() && o.col().contains(e.col())){
+					restat(o,e);
+					}
+				}
 			}
 		}
 		for(Objeto o:ob){
-			if(o.could_render()){
-				o.pos().sub(0, gr);
+			if(o.could_execute()){
+				if(o.could_render()){
+					o.pos().sub(0, gr);
+				}
+				if(o.col().overlaps(player.col())){
+					restat_lr(o,player);
+				}
+			o.ejecutar();
 			}
 		}
+		for(Projectil o:prj){
+			if(!o.deleted() && o.could_render()){
+				for(Colisionable e:all){
+					if(e.col().overlaps(o.col())){
+						if(e instanceof Wall){
+							o.Delete();
+						}else if(e instanceof Hittable){
+								((Hittable)e).hit(o);
+								o.onHit((Hittable)e);
+						}
+					}
+				}
+			}
+		}
+		
+		// test
 		if(player.pos().y < 0){
 			player.pos().y = 20;
 		}
+		
 	}
 	
 	private void restat(Ubicable c, Colisionable w) {
-		if(c.pos().y < w.col().y+w.col().height && c.pos().y > (w.col().y+w.col().height)-c.moving_force_lr()){
-			c.pos().y = w.col().y+w.col().height+.1f;
-		}else if(c.pos().y+c.col().height > w.col().y && c.pos().y+c.col().height < w.col().y+c.moving_force_lr()){
-			c.pos().y = w.col().y-(c.col().height+(c.moving_force_lr()/2));
+	restat_lr(c,w);
+	restat_ud(c,w);
+	}
+	
+	private void restat_ud(Ubicable c,Colisionable w){
+		if(c.pos().y < w.col().y+w.col().height && c.pos().y > (w.col().y+w.col().height)-(gr*2)){
+			c.pos().y = w.col().y+w.col().height+(gr/10);
+		}else if(c.pos().y+c.col().height > w.col().y && c.pos().y+c.col().height < w.col().y+(c.moving_force_up()*2)){
+			c.pos().y = w.col().y-(c.col().height+(c.moving_force_up()/1.5f));
 		}
-		if(c.pos().x < w.col().x+w.col().width && c.pos().x > (w.col().x+w.col().width)-(c.moving_force_lr()+1)){
-			c.pos().x = w.col().x+w.col().width+(c.moving_force_lr()/2);
-		}else if(c.pos().x+c.col().width > w.col().x && c.pos().x+c.col().width < w.col().x+(c.moving_force_lr()+1)){
-			c.pos().x = w.col().x-(c.col().width+(c.moving_force_lr()/2));
+	}
+	
+	private void restat_lr(Ubicable c,Colisionable w){
+		if(c.pos().x < w.col().x+w.col().width && c.pos().x > (w.col().x+w.col().width)-(c.moving_force_lr()*1.5f)){
+			c.pos().x = w.col().x+w.col().width+(c.moving_force_lr()/2f);
+		}else if(c.pos().x+c.col().width > w.col().x && c.pos().x+c.col().width < w.col().x+(c.moving_force_lr()*1.5f)){
+			c.pos().x = w.col().x-(c.col().width+(c.moving_force_lr()/2f));
 		}
-			
 	}
 	
 }

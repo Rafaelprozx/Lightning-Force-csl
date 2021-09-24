@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import csl.espacio.clases.Colisionable;
 import csl.espacio.clases.Rendereable;
+import csl.suelo.clases.Projectil.origen;
 import csl.suelo.projectiles.balas_9mm;
 
 public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
@@ -18,9 +19,9 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	private boolean[] ss;
 	private boolean facing;
 	private Camera cam;
-	private float mflr=0,mfu=0;
+	private float mflr=0,mfu=5;
 	
-	public Pj(float x,float y,float w,float h,int heal,Camera cm){
+	public Pj(float x,float y,float w,float h,int heal,float mov,Camera cm){
 	health = heal;
 	pos = new Vector2(x,y);
 	hitbox = new Rectangle(x,y,w,h);
@@ -30,8 +31,7 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	ss[a] = false;
 	}
 	facing = true;
-	mflr = 2;
-	mfu = 2;
+	mflr = mov;
 	}
 	
 	@Override
@@ -79,7 +79,7 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	}
 	
 	public Projectil projectil(){
-		return new balas_9mm(pos, facing, null);
+		return new balas_9mm(pos, facing, origen.jugador, cam);
 	}
 
 	@Override
@@ -218,7 +218,7 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 
 	@Override
 	public float moving_force_up() {
-		return 0;
+		return mfu;
 	}
 
 }

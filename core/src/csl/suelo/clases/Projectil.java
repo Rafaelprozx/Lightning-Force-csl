@@ -6,20 +6,22 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import csl.espacio.clases.Rendereable;
 
-public class Projectil implements Rendereable, Ubicable {
+public class Projectil implements Rendereable, Ubicable ,Damageable{
 
 	private Vector2 pos;
 	private Vector2 dir;
 	private Camera cam;
 	private Rectangle d;
 	private boolean cr;
+	private origen org;
 	
-	public Projectil(Vector2 post,Vector2 direccion,Rectangle hitbox, Camera cm){
+	public Projectil(Vector2 post,Vector2 direccion,Rectangle hitbox,Camera cm,origen f){
 		pos = post;
 		dir = direccion;
 		cam = cm;
 		d = hitbox;
 		cr = true;
+		org = f;
 	}
 
 	@Override
@@ -27,10 +29,6 @@ public class Projectil implements Rendereable, Ubicable {
 		if(could_render()) {
 		pos.add(dir);
 		}
-	}
-	
-	public int Damage() {
-		return 1;
 	}
 	
 	public void Delete() {
@@ -44,6 +42,10 @@ public class Projectil implements Rendereable, Ubicable {
 		}
 	}
 	return cr;
+	}
+	
+	public origen origen(){
+		return org;
 	}
 	
 	public boolean deleted() {
@@ -84,14 +86,27 @@ public class Projectil implements Rendereable, Ubicable {
 
 	@Override
 	public float moving_force_lr() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dir.x;
 	}
 
 	@Override
 	public float moving_force_up() {
-		// TODO Auto-generated method stub
-		return 0;
+		return dir.y;
+	}
+	
+	public static enum origen{
+		jugador,enemigo,mundo,ninguno
+	}
+
+	@Override
+	public boolean onHit(Hittable c) {
+		Delete();
+		return true;
+	}
+
+	@Override
+	public int Damage() {
+		return 1;
 	}
 
 }
