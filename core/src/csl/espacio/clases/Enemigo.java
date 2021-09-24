@@ -71,4 +71,14 @@ public class Enemigo implements Colisionable, Rendereable {
 	public boolean could_render() {
 		return !isd && statics.In_cam_range(this, cam);
 	}
+
+	@Override
+	public float centerX() {
+		return pos.x+(data.height/2);
+	}
+
+	@Override
+	public float centerY() {
+		return pos.y+(data.width/2);
+	}
 }

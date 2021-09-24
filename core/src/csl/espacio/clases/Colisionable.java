@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 public interface Colisionable {
 	public Rectangle col();
+	public float centerX();
+	public float centerY();
 	 public static class statics{
 		 public static boolean In_cam_range(Colisionable c,Camera cam){
 			 return !(c.col().x < cam.position.x-(cam.viewportWidth/2) || c.col().y < cam.position.y-(cam.viewportHeight/2) || c.col().x > cam.position.x+(cam.viewportWidth/2) || c.col().y > cam.position.y+(cam.viewportHeight/2));

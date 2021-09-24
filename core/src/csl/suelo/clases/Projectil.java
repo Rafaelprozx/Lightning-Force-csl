@@ -71,5 +71,27 @@ public class Projectil implements Rendereable, Ubicable {
 		pos.set(x, y);
 		
 	}
+	
+	@Override
+	public float centerX() {
+		return pos.x+(d.height/2);
+	}
+
+	@Override
+	public float centerY() {
+		return pos.y+(d.width/2);
+	}
+
+	@Override
+	public float moving_force_lr() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float moving_force_up() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

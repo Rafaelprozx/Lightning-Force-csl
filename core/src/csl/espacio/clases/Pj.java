@@ -308,5 +308,15 @@ public class Pj implements Colisionable,Rendereable,InputProcessor{
 	public boolean could_render() {
 		return true;
 	}
+
+	@Override
+	public float centerX() {
+		return pos.x+(d.height/2);
+	}
+
+	@Override
+	public float centerY() {
+		return pos.y+(d.width/2);
+	}
 	
 }

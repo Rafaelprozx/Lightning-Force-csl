@@ -1,8 +1,11 @@
 package csl.espacio;
 
 import com.badlogic.gdx.Game;
+
+import csl.espacio.clases.test.test;
 import csl.suelo.test2;
 
+@SuppressWarnings("unused")
 public class Juego extends Game {
 
 	

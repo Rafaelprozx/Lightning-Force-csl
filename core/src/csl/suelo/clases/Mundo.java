@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-
 import csl.espacio.clases.Colisionable;
-import csl.espacio.clases.Colisionable.statics;
 import csl.espacio.clases.Rendereable;
 
 public class Mundo{
@@ -18,12 +16,11 @@ public class Mundo{
 	private Array<Objeto> ob;
 	private Array<Wall> wall;
 	private Pj player;
-	private float gr,ebb;
+	private float gr;
 	
 	public Mundo(Camera cmr,float gravity){
 	cam = cmr;
 	gr = gravity;
-	ebb = gravity/10;
 	bg = new Array<Rendereable>();
 	fg = new Array<Rendereable>();
 	en = new Array<Enemigo>();
@@ -158,20 +155,17 @@ public class Mundo{
 	}
 	
 	private void restat(Ubicable c, Colisionable w) {
-		if(c.pos().y < w.col().y+w.col().height){
+		if(c.pos().y < w.col().y+w.col().height && c.pos().y > (w.col().y+w.col().height)-c.moving_force_lr()){
 			c.pos().y = w.col().y+w.col().height+.1f;
-		}else if(c.pos().y+c.col().height > w.col().y){
-			c.pos().y = c.col().height+w.col().y-.1f;
+		}else if(c.pos().y+c.col().height > w.col().y && c.pos().y+c.col().height < w.col().y+c.moving_force_lr()){
+			c.pos().y = w.col().y-(c.col().height+(c.moving_force_lr()/2));
+		}
+		if(c.pos().x < w.col().x+w.col().width && c.pos().x > (w.col().x+w.col().width)-(c.moving_force_lr()+1)){
+			c.pos().x = w.col().x+w.col().width+(c.moving_force_lr()/2);
+		}else if(c.pos().x+c.col().width > w.col().x && c.pos().x+c.col().width < w.col().x+(c.moving_force_lr()+1)){
+			c.pos().x = w.col().x-(c.col().width+(c.moving_force_lr()/2));
 		}
 			
-	}
-	
-	private boolean y_range(Colisionable a,Colisionable b){
-		return b.col().y+ebb < a.col().y+a.col().height | (b.col().y+b.col().height)-ebb > a.col().y;
-	}
-	
-	private boolean x_range(Colisionable a,Colisionable b){
-		return b.col().x+ebb < a.col().x+a.col().width | (b.col().x+b.col().width)-ebb > a.col().x;
 	}
 	
 }

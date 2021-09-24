@@ -79,5 +79,27 @@ public class Enemigo implements Ejecutable, Ubicable, Hittable {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public float centerX() {
+		return pos().x+(col().height/2);
+	}
+
+	@Override
+	public float centerY() {
+		return pos().y+(col().width/2);
+	}
+
+	@Override
+	public float moving_force_lr() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float moving_force_up() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

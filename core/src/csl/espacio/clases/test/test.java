@@ -1,11 +1,9 @@
 package csl.espacio.clases.test;
 
-import com.badlogic.gdx.Game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -19,8 +17,7 @@ import csl.espacio.clases.Pj;
 import csl.espacio.naves.Impact;
 
 public class test implements Screen {
-	@SuppressWarnings("unused")
-	private Game gm;
+
 	private test_camera cam;
 	private Stage st;
 	private ShapeRenderer ln;
@@ -29,8 +26,7 @@ public class test implements Screen {
 	private Pj player;
 	private InputMultiplexer inp;
 
-	public test(Game j) {
-		gm = j;
+	public test() {
 	}
 
 	@Override

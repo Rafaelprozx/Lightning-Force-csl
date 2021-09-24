@@ -31,8 +31,11 @@ public class test2 implements Screen {
 	mundo = new Mundo(cam,1);
 	sh = new ShapeRenderer();
 	batch = new SpriteBatch();
-	player = mundo.add_player(10, 30, 5, 5, 1);
-	mundo.add_wall(0,0,50,10);
+	player = mundo.add_player(10, 30, 10, 10, 1);
+	mundo.add_wall(0,0,150,15);
+	mundo.add_wall(0,50,60,15);
+	mundo.add_wall(0, 15, 20, 20);
+	mundo.add_wall(95,15,15,15);
 	Gdx.input.setInputProcessor(player);
 	}
 
@@ -46,9 +49,8 @@ public class test2 implements Screen {
 	batch.end();
 	sh.setProjectionMatrix(cam.combined);
 	sh.begin(ShapeType.Line);
-	sh.setColor(1, 0, 0, 1);
-	sh.rect(player.pos().x, player.pos().y,player.col().width,player.col().height);
-	sh.rect(0,0,50,10);
+	mundo.render_hitbox_player(sh);
+	mundo.render_hitbox_wall(sh);
 	sh.end();
 	}
 

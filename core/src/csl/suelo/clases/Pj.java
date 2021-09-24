@@ -18,6 +18,7 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	private boolean[] ss;
 	private boolean facing;
 	private Camera cam;
+	private float mflr=0,mfu=0;
 	
 	public Pj(float x,float y,float w,float h,int heal,Camera cm){
 	health = heal;
@@ -29,6 +30,8 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	ss[a] = false;
 	}
 	facing = true;
+	mflr = 2;
+	mfu = 2;
 	}
 	
 	@Override
@@ -45,12 +48,12 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	public void Actuar(Batch draw,float delta){
 		col();
 		if(ss[3]){
-			pos.add(3, 0);
+			pos.add(mflr, 0);
 		}else if(ss[2]){
-			pos.sub(3, 0);
+			pos.sub(mflr, 0);
 		}
 		if(ss[4]){
-			pos.add(0,3);
+			pos.add(0,mfu);
 		}
 		render(draw,delta);
 	}
@@ -196,6 +199,26 @@ public class Pj implements Rendereable, Ubicable, Hittable, InputProcessor{
 	public boolean scrolled(float amountX, float amountY) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public float centerX() {
+		return pos.x+(hitbox.width/2);
+	}
+
+	@Override
+	public float centerY() {
+		return pos.y+(hitbox.height/2);
+	}
+
+	@Override
+	public float moving_force_lr() {
+		return mflr;
+	}
+
+	@Override
+	public float moving_force_up() {
+		return 0;
 	}
 
 }
